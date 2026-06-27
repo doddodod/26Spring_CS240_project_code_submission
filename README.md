@@ -33,6 +33,24 @@ Run forward-energy seam carving:
 python forward_energy_seam_carving.py picture/input/bench.png results/forward/bench.jpg --width 400
 ```
 
+Run batch seam extraction extension:
+
+```bash
+python batch_seam_carving.py picture/input/bench.png results/batch_bench.jpg --width 400 --batch-size 5
+```
+
+Run local DP update extension:
+
+```bash
+python local_dp_update_carving.py picture/input/bench.png results/local_dp_bench.jpg --width 400 --delta 5
+```
+
+Run multiscale seam carving extension:
+
+```bash
+python multiscale_carving.py picture/input/bench.png results/multiscale_bench.jpg --width 400 --scale-factor 2 --band-width 5
+```
+
 Run the combined scalability experiment:
 
 ```bash
