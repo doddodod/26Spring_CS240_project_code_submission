@@ -9,6 +9,9 @@ The implementation is written in Python with NumPy and Pillow. The seam-search
 dynamic programs, seam backtracking, seam removal, seam insertion, masking, and
 extension methods are implemented directly in this repository.
 
+## Project report
+experimental_report.pdf
+
 ## Running Examples
 
 Install dependencies:
