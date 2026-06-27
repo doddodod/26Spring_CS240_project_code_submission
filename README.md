@@ -26,7 +26,7 @@ pip install -r requirements.txt
 Run backward-energy seam carving:
 
 ```bash
-python backward_energy_seam_carving.py picture/input/castle.jpg results/backward/castle.jpg --width 500
+python backward_energy_seam_carving.py picture/input/bench.png results/backward/bench.jpg --width 500
 ```
 
 Run forward-energy seam carving:
