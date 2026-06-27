@@ -10,6 +10,7 @@ dynamic programs, seam backtracking, seam removal, seam insertion, masking, and
 extension methods are implemented directly in this repository.
 
 ## Project report
+
 experimental_report.pdf
 
 ## Running Examples
@@ -17,6 +18,7 @@ experimental_report.pdf
 Install dependencies:
 
 Use Python 3.9.7
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -54,21 +56,18 @@ python multiscale_carving.py picture/input/bench.png results/multiscale_bench.jp
 Run the combined scalability experiment:
 
 ```bash
+# Run time comparion of backward, forward, batch, local DP, and multiscale as shown in report.
 python combined_methods_experiment.py
 ```
 
-Run scalability experiments:
+Run scalability experiments: 
 
 ```bash
 # Main backward-vs-forward runtime scalability experiment as shown in report.
 python runtime_scalability_experiment.py
-
-# Extension comparison: runnning time comparion of backward, forward, batch, local DP, and multiscale as shown in report.
-python combined_methods_experiment.py
 ```
 
 The generated CSV files and plots are saved under `results/timing/`.
-
 
 ## Directory Structure
 
@@ -95,9 +94,9 @@ The generated CSV files and plots are saved under `results/timing/`.
 particular:
 
 - `picture/input/` contains input images such as `bench.png`, `castle.jpg`,
-  `museum.jpg`, `shore.jpg`, `ratatouille.jpg`, and `eiffel.jpg`.
+`museum.jpg`, `shore.jpg`, `ratatouille.jpg`, and `eiffel.jpg`.
 - `picture/masks/` contains optional masks for protection or object removal
-  experiments.
+experiments.
 
 ### `results/`
 
@@ -105,11 +104,11 @@ particular:
 experiment data. Important subdirectories include:
 
 - `results/poster_demos/`: visual examples used for qualitative comparison and
-  poster figures.
+poster figures.
 - `results/energy/`: backward/forward energy-map visualizations.
 - `results/failure/`: failure-case comparison images.
 - `results/timing/`: all scalability-experiment inputs, CSV files, runtime
-  plots, and extension experiment results.
+plots, and extension experiment results.
 
 The `results/timing/` directory is especially important. It contains:
 
@@ -125,84 +124,69 @@ The `results/timing/` directory is especially important. It contains:
 ### Basic Implementation
 
 - `baselines.py`  
-  Implements ordinary resizing baselines such as scaling and center cropping.
-
+Implements ordinary resizing baselines such as scaling and center cropping.
 - `backward_energy_seam_carving.py`  
-  Implements the standard backward-energy seam carving pipeline. It includes
-  Sobel energy computation, vertical seam DP, seam removal, seam insertion,
-  protective masks, removal masks, width/height resizing, and object removal.
-
+Implements the standard backward-energy seam carving pipeline. It includes
+Sobel energy computation, vertical seam DP, seam removal, seam insertion,
+protective masks, removal masks, width/height resizing, and object removal.
 - `forward_energy_seam_carving.py`  
-  Implements forward-energy seam carving. It uses transition-dependent costs to
-  estimate the disruption introduced after seam removal, while keeping the same
-  DP/backtracking structure.
+Implements forward-energy seam carving. It uses transition-dependent costs to
+estimate the disruption introduced after seam removal, while keeping the same
+DP/backtracking structure.
 
 ### Extension Methods
 
 - `batch_seam_carving.py`  
-  Implements batch seam extraction. It computes one energy map for the current
-  image, repeatedly extracts several non-overlapping seams from a penalized
-  working energy map, and removes the batch together.
-
+Implements batch seam extraction. It computes one energy map for the current
+image, repeatedly extracts several non-overlapping seams from a penalized
+working energy map, and removes the batch together.
 - `local_dp_update_carving.py`  
-  Implements local DP update. It reuses the previous cumulative DP table and
-  parent table, recomputing only a conservative affected region around the
-  removed seam. It also includes correctness validation utilities.
-
+Implements local DP update. It reuses the previous cumulative DP table and
+parent table, recomputing only a conservative affected region around the
+removed seam. It also includes correctness validation utilities.
 - `local_update_carving.py`  
-  Implements local energy-map update. It recomputes Sobel energy only in a band
-  around the removed seam while still running global DP.
-
+Implements local energy-map update. It recomputes Sobel energy only in a band
+around the removed seam while still running global DP.
 - `multiscale_carving.py`  
-  Implements coarse-to-fine multiscale seam carving. It finds a coarse seam on a
-  downsampled image, maps the seam back to full resolution, and refines it inside
-  a narrow band.
+Implements coarse-to-fine multiscale seam carving. It finds a coarse seam on a
+downsampled image, maps the seam back to full resolution, and refines it inside
+a narrow band.
 
 ### Experiment Scripts
 
 - `runtime_scalability_experiment.py`  
-  Runs the main backward-energy vs forward-energy scalability experiment.
-
+Runs the main backward-energy vs forward-energy scalability experiment.
 - `combined_methods_experiment.py`  
-  Runs the unified five-method scalability comparison: backward, forward, batch
-  seam extraction, local DP update, and multiscale seam carving.
-
+Runs the unified five-method scalability comparison: backward, forward, batch
+seam extraction, local DP update, and multiscale seam carving.
 - `batch_scalability_experiment.py`  
-  Runs scalability experiments for batch seam extraction with different batch
-  sizes.
-
+Runs scalability experiments for batch seam extraction with different batch
+sizes.
 - `local_update_experiment.py`  
-  Runs scalability experiments for local energy-map update.
-
+Runs scalability experiments for local energy-map update.
 - `validate_local_dp.py`  
-  Validates local DP correctness and speedup under different affected-region
-  bandwidths.
-
+Validates local DP correctness and speedup under different affected-region
+bandwidths.
 - `multiscale_experiment.py`  
-  Runs scalability and quality-comparison experiments for multiscale seam
-  carving.
-
+Runs scalability and quality-comparison experiments for multiscale seam
+carving.
 - `poster_baseline_comparisons.py`  
-  Generates baseline comparison figures for poster/report demos.
-
+Generates baseline comparison figures for poster/report demos.
 - `poster_application_demos.py`  
-  Generates application-level demo figures such as protection, insertion, and
-  object removal.
-
+Generates application-level demo figures such as protection, insertion, and
+object removal.
 - `bench_pipeline_visualization.py`  
-  Generates pipeline-style visualizations for the `bench.png` example.
+Generates pipeline-style visualizations for the `bench.png` example.
 
 ### Other Utility Code
 
 - `experiments.py`  
-  Visual-comparison script for running scaling, cropping, backward seam
-  carving, and forward seam carving on one image.
-
+Visual-comparison script for running scaling, cropping, backward seam
+carving, and forward seam carving on one image.
 - `timing.py`  
-  Timing script for simple runtime measurements.
-
+Timing script for simple runtime measurements.
 - `visualization.py`  
-  Helper functions for side-by-side comparison images.
-
+Helper functions for side-by-side comparison images.
 - `energy_visualization.py`  
-  Exports normalized backward/forward energy-map visualizations.
+Exports normalized backward/forward energy-map visualizations.
+
